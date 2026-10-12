@@ -1,0 +1,109 @@
+site_name: MongoDB Mastery Path
+site_description: A hands-on MongoDB course — BSON documents, CRUD, drivers, document modeling and schema patterns, indexes and explain plans, the aggregation pipeline, transactions, change streams, replica sets, sharding, security, backups and performance tuning.
+site_url: https://sigilipelli.github.io/mongodb-mastery-path/
+repo_url: https://github.com/sigilipelli/mongodb-mastery-path
+repo_name: mongodb-mastery-path
+
+theme:
+  name: material
+  favicon: assets/favicon.svg
+  custom_dir: docs/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/progress-tracker.css
+
+extra_javascript:
+  - javascripts/progress-tracker.js
+
+nav:
+  - Home: index.md
+  - Privacy Policy: privacy.md
+  - License: license.md
+  - "Level 1 · MongoDB Foundations":
+      - Overview: level-1/index.md
+      - "01 · How MongoDB Is Built: mongod, Storage & a Local Lab": level-1/01-architecture-and-setup.md
+      - "02 · mongosh Like a Pro": level-1/02-mongosh-like-a-pro.md
+      - "03 · Documents, BSON & Data Types": level-1/03-documents-bson-types.md
+      - "04 · Inserting & Querying Documents": level-1/04-insert-and-query.md
+      - "05 · Querying Arrays & Embedded Documents": level-1/05-arrays-embedded-queries.md
+      - "06 · Update Operators, Upserts & Array Updates": level-1/06-update-operators.md
+      - "07 · Deletes, Replaces & Bulk Writes": level-1/07-deletes-replaces-bulk.md
+      - "08 · Drivers: PyMongo & the Node.js Driver": level-1/08-drivers.md
+      - "09 · mongoimport, mongoexport, mongodump & mongorestore": level-1/09-import-export-dump.md
+      - "10 · Project — Recipe Box Data Layer": level-1/10-project-recipe-box.md
+  - "Level 2 · Data Modeling & Indexes":
+      - Overview: level-2/index.md
+      - "01 · Thinking in Documents: Embed or Reference?": level-2/01-embed-or-reference.md
+      - "02 · Modeling Relationships": level-2/02-modeling-relationships.md
+      - "03 · Schema Design Patterns": level-2/03-schema-design-patterns.md
+      - "04 · Schema Validation with $jsonSchema": level-2/04-schema-validation.md
+      - "05 · How Indexes Work & Compound Index Design": level-2/05-indexes-compound.md
+      - "06 · Multikey, Unique, Partial, TTL, Wildcard & Text Indexes": level-2/06-index-types.md
+      - "07 · Reading explain()": level-2/07-reading-explain.md
+      - "08 · The Query Planner, Plan Cache & Hints": level-2/08-query-planner.md
+      - "09 · Time Series & Capped Collections": level-2/09-time-series-capped.md
+      - "10 · Project — Model & Index a Store Catalog": level-2/10-project-store-catalog.md
+  - "Level 3 · Aggregation & Application Features":
+      - Overview: level-3/index.md
+      - "01 · Aggregation Pipeline Fundamentals": level-3/01-aggregation-fundamentals.md
+      - "02 · Reshaping Documents with Expressions": level-3/02-reshaping-expressions.md
+      - "03 · Joins & Unions: $lookup, $graphLookup, $unionWith": level-3/03-lookup-joins.md
+      - "04 · Analytics: $facet, $bucket & Window Functions": level-3/04-analytics-windows.md
+      - "05 · Pipeline Performance, $out & $merge": level-3/05-pipeline-performance.md
+      - "06 · Multi-Document Transactions": level-3/06-transactions.md
+      - "07 · Change Streams": level-3/07-change-streams.md
+      - "08 · Geospatial Queries": level-3/08-geospatial.md
+      - "09 · Text Search & Collation": level-3/09-text-search-collation.md
+      - "10 · Project — Order Analytics Backend": level-3/10-project-order-analytics.md
+  - "Level 4 · Operations & Production":
+      - Overview: level-4/index.md
+      - "01 · Replica Sets: Elections, the Oplog & Failover": level-4/01-replica-sets.md
+      - "02 · Write Concern, Read Concern & Read Preference": level-4/02-read-write-concerns.md
+      - "03 · Sharding Architecture": level-4/03-sharding-architecture.md
+      - "04 · Choosing & Changing a Shard Key": level-4/04-shard-keys.md
+      - "05 · Authentication, Roles & TLS": level-4/05-security.md
+      - "06 · Backup, Restore & Point-in-Time Recovery": level-4/06-backup-restore.md
+      - "07 · Monitoring & the Profiler": level-4/07-monitoring-profiler.md
+      - "08 · Performance Tuning: WiredTiger, Memory & Connections": level-4/08-performance-tuning.md
+      - "09 · Upgrades, FCV & Online Schema Migrations": level-4/09-upgrades-migrations.md
+      - "10 · Capstone — A Secured Sharded Cluster": level-4/10-capstone-sharded-cluster.md
