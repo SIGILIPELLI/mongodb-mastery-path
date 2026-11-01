@@ -1,0 +1,2798 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Level 2 project: model a 100,000-product catalogue with patterns and a validator, design ESR and partial indexes, and prove every query with explain().">
+      
+      
+      
+        <link rel="canonical" href="https://sigilipelli.github.io/mongodb-mastery-path/level-2/10-project-store-catalog/">
+      
+      
+        <link rel="prev" href="../09-time-series-capped/">
+      
+      
+        <link rel="next" href="../../level-3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>10 · Project — Model & Index a Store Catalog - MongoDB Mastery Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/progress-tracker.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MongoDB Mastery Path">
+  <meta property="og:title" content="10 · Project — Model & Index a Store Catalog">
+  <meta property="og:description" content="Level 2 project: model a 100,000-product catalogue with patterns and a validator, design ESR and partial indexes, and prove every query with explain().">
+  <meta property="og:url" content="https://sigilipelli.github.io/mongodb-mastery-path/level-2/10-project-store-catalog/">
+  <meta property="og:image" content="https://sigilipelli.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="10 · Project — Model & Index a Store Catalog">
+  <meta name="twitter:description" content="Level 2 project: model a 100,000-product catalogue with patterns and a validator, design ESR and partial indexes, and prove every query with explain().">
+  <meta name="twitter:image" content="https://sigilipelli.github.io/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9440969811959397",
+      enable_page_level_ads: true
+    });
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "MongoDB Mastery Path",
+    "description": "A hands-on MongoDB course — document modeling, CRUD, indexes, the aggregation pipeline, schema validation, transactions, replica sets, sharding, security, backups and performance tuning.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Mastery Path",
+      "sameAs": "https://sigilipelli.github.io/"
+    },
+    "isAccessibleForFree": true,
+    "url": "https://sigilipelli.github.io/mongodb-mastery-path/level-2/10-project-store-catalog/"
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "10 \u00b7 Project \u2014 Model \u0026 Index a Store Catalog",
+    "description": "Level 2 project: model a 100,000-product catalogue with patterns and a validator, design ESR and partial indexes, and prove every query with explain().",
+    "url": "https://sigilipelli.github.io/mongodb-mastery-path/level-2/10-project-store-catalog/",
+    "isPartOf": {
+      "@type": "Course",
+      "name": "MongoDB Mastery Path",
+      "url": "https://sigilipelli.github.io/mongodb-mastery-path/"
+    },
+    "isAccessibleForFree": true,
+    "learningResourceType": "Lesson",
+    "inLanguage": "en"
+  }
+  </script>
+  
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#10-project-model-index-a-store-catalog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MongoDB Mastery Path" class="md-header__button md-logo" aria-label="MongoDB Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MongoDB Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10 · Project — Model & Index a Store Catalog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sigilipelli/mongodb-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mongodb-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../privacy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Privacy Policy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · MongoDB Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Data Modeling & Indexes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Aggregation & Application Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Operations & Production
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MongoDB Mastery Path" class="md-nav__button md-logo" aria-label="MongoDB Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    MongoDB Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sigilipelli/mongodb-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mongodb-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · MongoDB Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · MongoDB Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/01-architecture-and-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · How MongoDB Is Built: mongod, Storage & a Local Lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/02-mongosh-like-a-pro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · mongosh Like a Pro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/03-documents-bson-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Documents, BSON & Data Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/04-insert-and-query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Inserting & Querying Documents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/05-arrays-embedded-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Querying Arrays & Embedded Documents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/06-update-operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Update Operators, Upserts & Array Updates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/07-deletes-replaces-bulk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Deletes, Replaces & Bulk Writes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/08-drivers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Drivers: PyMongo & the Node.js Driver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/09-import-export-dump/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · mongoimport, mongoexport, mongodump & mongorestore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/10-project-recipe-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Recipe Box Data Layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Data Modeling & Indexes
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Data Modeling & Indexes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-embed-or-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Thinking in Documents: Embed or Reference?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-modeling-relationships/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-schema-design-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Schema Design Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-schema-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Schema Validation with $jsonSchema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-indexes-compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · How Indexes Work & Compound Index Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-index-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Multikey, Unique, Partial, TTL, Wildcard & Text Indexes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-reading-explain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Reading explain()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-query-planner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · The Query Planner, Plan Cache & Hints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-time-series-capped/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Time Series & Capped Collections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Model & Index a Store Catalog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Model & Index a Store Catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-access-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The access patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-indexes-query-by-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The indexes, query by query
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-no-secondary-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before: no secondary indexes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-designed-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After: the designed indexes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-validator-at-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The validator at work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Aggregation & Application Features
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Aggregation & Application Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/01-aggregation-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Aggregation Pipeline Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/02-reshaping-expressions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Reshaping Documents with Expressions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/03-lookup-joins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Joins & Unions: $lookup, $graphLookup, $unionWith
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/04-analytics-windows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Analytics: $facet, $bucket & Window Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/05-pipeline-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Pipeline Performance, $out & $merge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/06-transactions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Multi-Document Transactions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/07-change-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Change Streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/08-geospatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Geospatial Queries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/09-text-search-collation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Text Search & Collation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/10-project-order-analytics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Order Analytics Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Operations & Production
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Operations & Production
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/01-replica-sets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Replica Sets: Elections, the Oplog & Failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/02-read-write-concerns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Write Concern, Read Concern & Read Preference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/03-sharding-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Sharding Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/04-shard-keys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Choosing & Changing a Shard Key
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/05-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Authentication, Roles & TLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/06-backup-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Backup, Restore & Point-in-Time Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/07-monitoring-profiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Monitoring & the Profiler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/08-performance-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Performance Tuning: WiredTiger, Memory & Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/09-upgrades-migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Upgrades, FCV & Online Schema Migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/10-capstone-sharded-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — A Secured Sharded Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-access-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The access patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-indexes-query-by-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The indexes, query by query
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-no-secondary-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before: no secondary indexes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-designed-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After: the designed indexes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-validator-at-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The validator at work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="10-project-model-index-a-store-catalog">10 · Project — Model &amp; Index a Store Catalog<a class="headerlink" href="#10-project-model-index-a-store-catalog" title="Permanent link">&para;</a></h1>
+<p>This project takes everything in Level 2 and applies it to one realistic problem: the product catalogue of
+an online store. You'll model it from its access patterns, enforce its shape with a validator, design one
+index per hot query, and — the part most teams skip — write a script that <strong>proves</strong> every query uses its
+index well, so a future change that breaks a query fails loudly instead of slowly.</p>
+<h2 id="the-access-patterns">The access patterns<a class="headerlink" href="#the-access-patterns" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Operation</th>
+<th>Frequency</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Category page: active products in a category, cheapest first, 24 per page</td>
+<td>very high</td>
+<td>equality, equality, sort</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Brand page: a brand's active products, best rated first</td>
+<td>high</td>
+<td>equality, equality, sort</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Spec filter: e.g. laptops with at least 32 GB RAM</td>
+<td>high</td>
+<td>equality + attribute range</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Product page by SKU</td>
+<td>very high</td>
+<td>unique equality</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>Low-stock report: active products with fewer than 5 in stock</td>
+<td>a few times a day</td>
+<td>equality + range + sort on the range</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-model">The model<a class="headerlink" href="#the-model" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nx">sku</span><span class="o">:</span><span class="w"> </span><span class="s2">"SKU-000123"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Zen Audio headphones 123"</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nx">category</span><span class="o">:</span><span class="w"> </span><span class="s2">"headphones"</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nx">brand</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">_id</span><span class="o">:</span><span class="w"> </span><span class="s2">"zen"</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Zen Audio"</span><span class="w"> </span><span class="p">},</span><span class="w">          </span><span class="c1">// extended reference (lesson 03)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="nx">Decimal128</span><span class="p">(</span><span class="s2">"129.99"</span><span class="p">),</span><span class="w">                       </span><span class="c1">// exact money (Level 1 · 03)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nx">stock</span><span class="o">:</span><span class="w"> </span><span class="mf">42</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nx">attrs</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">k</span><span class="o">:</span><span class="w"> </span><span class="s2">"wireless"</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">k</span><span class="o">:</span><span class="w"> </span><span class="s2">"anc"</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">],</span><span class="w">   </span><span class="c1">// attribute pattern (lesson 03)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nx">rating</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">311</span><span class="p">,</span><span class="w"> </span><span class="nx">avg</span><span class="o">:</span><span class="w"> </span><span class="mf">4.12</span><span class="w"> </span><span class="p">},</span><span class="w">                 </span><span class="c1">// computed pattern (lesson 03)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="nx">recentReviews</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">stars</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="nx">at</span><span class="o">:</span><span class="w"> </span><span class="nx">ISODate</span><span class="p">(</span><span class="s2">"..."</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">]</span><span class="w">           </span><span class="c1">// subset pattern, max 5 (lesson 03)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span>
+</code></pre></div>
+<p>Each choice comes from Level 2:</p>
+<ul>
+<li><strong>Brand is an extended reference.</strong> Every product listing shows the brand name, brands are renamed almost
+  never, and <code>brand._id</code> still links to a full <code>brands</code> document for the brand page header.</li>
+<li><strong>Specs use the attribute pattern.</strong> Four categories with different specs (and many more in a real store)
+  share one <code>attrs_kv</code> index instead of one index per spec.</li>
+<li><strong>Ratings are pre-computed</strong> (count + average) and the latest reviews are a bounded subset; the full review
+  history would live in its own <code>reviews</code> collection (lesson 01's referencing rules).</li>
+<li><strong>SKU has a unique index</strong>, and is what URLs use.</li>
+</ul>
+<h2 id="the-code">The code<a class="headerlink" href="#the-code" title="Permanent link">&para;</a></h2>
+<p><code>catalog.py</code> creates the collection with its validator and indexes, loads 100,000 products with a seeded
+random generator, and runs the query budget check. Run it with <code>--no-indexes</code> to see the "before" picture.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="sd">"""Level 2 project: model, validate, index and verify a store catalogue."""</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">bson</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal128</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymongo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ASCENDING</span><span class="p">,</span> <span class="n">DESCENDING</span><span class="p">,</span> <span class="n">MongoClient</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s2">"mongodb://127.0.0.1:27017/?replicaSet=rs0"</span><span class="p">,</span> <span class="n">tz_aware</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">catalog</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">SCHEMA</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"$jsonSchema"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"sku"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="s2">"brand"</span><span class="p">,</span> <span class="s2">"price"</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">,</span> <span class="s2">"attrs"</span><span class="p">],</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="s2">"sku"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"pattern"</span><span class="p">:</span> <span class="s2">"^[A-Z]</span><span class="si">{3}</span><span class="s2">-[0-9]</span><span class="si">{6}</span><span class="s2">$"</span><span class="p">},</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="s2">"name"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"minLength"</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="s2">"category"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"laptop"</span><span class="p">,</span> <span class="s2">"phone"</span><span class="p">,</span> <span class="s2">"kettle"</span><span class="p">,</span> <span class="s2">"headphones"</span><span class="p">]},</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="s2">"brand"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span> <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"_id"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">],</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>                  <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"_id"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">},</span> <span class="s2">"name"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}}},</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="s2">"price"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"decimal"</span><span class="p">,</span> <span class="s2">"minimum"</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        <span class="s2">"status"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"active"</span><span class="p">,</span> <span class="s2">"discontinued"</span><span class="p">]},</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        <span class="s2">"stock"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="s2">"minimum"</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>        <span class="s2">"attrs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"maxItems"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>                  <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span> <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"k"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">]}},</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        <span class="s2">"rating"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span> <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"count"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">},</span> <span class="s2">"avg"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"double"</span><span class="p">}}},</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        <span class="s2">"recentReviews"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bsonType"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"maxItems"</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="p">}}}</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="n">INDEXES</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="c1"># Q1 category page: active products in a category, cheapest first</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>    <span class="p">([(</span><span class="s2">"status"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">),</span> <span class="p">(</span><span class="s2">"category"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">),</span> <span class="p">(</span><span class="s2">"price"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">)],</span> <span class="s2">"status_category_price"</span><span class="p">),</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>    <span class="c1"># Q2 brand page: a brand's active products, best rated first</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>    <span class="p">([(</span><span class="s2">"brand._id"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">),</span> <span class="p">(</span><span class="s2">"status"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">),</span> <span class="p">(</span><span class="s2">"rating.avg"</span><span class="p">,</span> <span class="n">DESCENDING</span><span class="p">)],</span> <span class="s2">"brand_status_rating"</span><span class="p">),</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>    <span class="c1"># Q3 spec filter: attribute pattern, one index for every spec</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>    <span class="p">([(</span><span class="s2">"attrs.k"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">),</span> <span class="p">(</span><span class="s2">"attrs.v"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">)],</span> <span class="s2">"attrs_kv"</span><span class="p">),</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>    <span class="c1"># Q5 low-stock report: partial index only over the few active products with low stock</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>    <span class="p">([(</span><span class="s2">"stock"</span><span class="p">,</span> <span class="n">ASCENDING</span><span class="p">)],</span> <span class="s2">"low_stock"</span><span class="p">),</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="p">]</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="n">BRANDS</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"acme"</span><span class="p">,</span> <span class="s2">"Acme"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"zen"</span><span class="p">,</span> <span class="s2">"Zen Audio"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"nova"</span><span class="p">,</span> <span class="s2">"Nova"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"kettleco"</span><span class="p">,</span> <span class="s2">"KettleCo"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"orbit"</span><span class="p">,</span> <span class="s2">"Orbit"</span><span class="p">)]</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="n">ATTRS</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>    <span class="s2">"laptop"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"ram_gb"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">])},</span> <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"screen_in"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">])},</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>                         <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"weight_kg"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="mi">2</span><span class="p">)}],</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>    <span class="s2">"phone"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"storage_gb"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">])},</span> <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"screen_in"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">])}],</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>    <span class="s2">"kettle"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"litres"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">])},</span> <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"watts"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2200</span><span class="p">,</span> <span class="mi">3000</span><span class="p">])}],</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    <span class="s2">"headphones"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"wireless"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">},</span> <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"anc"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">}],</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="p">}</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">with_indexes</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>    <span class="n">client</span><span class="o">.</span><span class="n">drop_database</span><span class="p">(</span><span class="s2">"catalog"</span><span class="p">)</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>    <span class="n">db</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span><span class="s2">"products"</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">SCHEMA</span><span class="p">)</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>    <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="s2">"sku"</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"sku_unique"</span><span class="p">)</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">with_indexes</span><span class="p">:</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>        <span class="k">return</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>    <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">INDEXES</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>        <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>    <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">INDEXES</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">name</span><span class="o">=</span><span class="n">INDEXES</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>                             <span class="n">partialFilterExpression</span><span class="o">=</span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span><span class="p">,</span> <span class="s2">"stock"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"$lt"</span><span class="p">:</span> <span class="mi">5</span><span class="p">}})</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100_000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>    <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>    <span class="n">base</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a>        <span class="n">cat</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ATTRS</span><span class="p">))</span>
+<a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a>        <span class="n">bid</span><span class="p">,</span> <span class="n">bname</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">BRANDS</span><span class="p">)</span>
+<a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a>        <span class="n">count</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a>        <span class="n">batch</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+<a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a>            <span class="s2">"sku"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"SKU-</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">bname</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="n">cat</span><span class="p">,</span>
+<a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>            <span class="s2">"brand"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"_id"</span><span class="p">:</span> <span class="n">bid</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="n">bname</span><span class="p">},</span>
+<a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a>            <span class="s2">"price"</span><span class="p">:</span> <span class="n">Decimal128</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">999</span><span class="p">,</span> <span class="mi">249999</span><span class="p">))</span> <span class="o">/</span> <span class="mi">100</span><span class="p">),</span>
+<a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a>            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.9</span> <span class="k">else</span> <span class="s2">"discontinued"</span><span class="p">,</span>
+<a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a>            <span class="s2">"stock"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="s2">"attrs"</span><span class="p">:</span> <span class="n">ATTRS</span><span class="p">[</span><span class="n">cat</span><span class="p">](</span><span class="n">r</span><span class="p">),</span>
+<a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a>            <span class="s2">"rating"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"count"</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span> <span class="s2">"avg"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">count</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">},</span>
+<a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a>            <span class="s2">"recentReviews"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"stars"</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="s2">"at"</span><span class="p">:</span> <span class="n">base</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">))}</span>
+<a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a>                              <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="mi">5</span><span class="p">))],</span>
+<a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a>        <span class="p">})</span>
+<a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5000</span><span class="p">:</span>
+<a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a>            <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a>            <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a>
+<a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a>
+<a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a><span class="n">QUERIES</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a>    <span class="s2">"Q1 category page"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"laptop"</span><span class="p">},</span> <span class="n">sort</span><span class="o">=</span><span class="p">[(</span><span class="s2">"price"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">24</span><span class="p">),</span>
+<a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a>    <span class="s2">"Q2 brand page"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"brand._id"</span><span class="p">:</span> <span class="s2">"zen"</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span><span class="p">},</span> <span class="n">sort</span><span class="o">=</span><span class="p">[(</span><span class="s2">"rating.avg"</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">24</span><span class="p">),</span>
+<a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>    <span class="s2">"Q3 laptops 32GB+ RAM"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"category"</span><span class="p">:</span> <span class="s2">"laptop"</span><span class="p">,</span>
+<a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>                                         <span class="s2">"attrs"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"$elemMatch"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="s2">"ram_gb"</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"$gte"</span><span class="p">:</span> <span class="mi">32</span><span class="p">}}}},</span> <span class="n">limit</span><span class="o">=</span><span class="mi">24</span><span class="p">),</span>
+<a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a>    <span class="s2">"Q4 product page"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"sku"</span><span class="p">:</span> <span class="s2">"SKU-000123"</span><span class="p">},</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>    <span class="s2">"Q5 low stock"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span><span class="p">,</span> <span class="s2">"stock"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"$lt"</span><span class="p">:</span> <span class="mi">5</span><span class="p">}},</span> <span class="n">sort</span><span class="o">=</span><span class="p">[(</span><span class="s2">"stock"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+<a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a><span class="p">}</span>
+<a id="__codelineno-1-94" name="__codelineno-1-94" href="#__codelineno-1-94"></a>
+<a id="__codelineno-1-95" name="__codelineno-1-95" href="#__codelineno-1-95"></a>
+<a id="__codelineno-1-96" name="__codelineno-1-96" href="#__codelineno-1-96"></a><span class="k">def</span><span class="w"> </span><span class="nf">stages</span><span class="p">(</span><span class="n">plan</span><span class="p">):</span>
+<a id="__codelineno-1-97" name="__codelineno-1-97" href="#__codelineno-1-97"></a>    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-98" name="__codelineno-1-98" href="#__codelineno-1-98"></a>    <span class="k">while</span> <span class="n">plan</span><span class="p">:</span>
+<a id="__codelineno-1-99" name="__codelineno-1-99" href="#__codelineno-1-99"></a>        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plan</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"stage"</span><span class="p">))</span>
+<a id="__codelineno-1-100" name="__codelineno-1-100" href="#__codelineno-1-100"></a>        <span class="n">plan</span> <span class="o">=</span> <span class="n">plan</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inputStage"</span><span class="p">)</span>
+<a id="__codelineno-1-101" name="__codelineno-1-101" href="#__codelineno-1-101"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-1-102" name="__codelineno-1-102" href="#__codelineno-1-102"></a>
+<a id="__codelineno-1-103" name="__codelineno-1-103" href="#__codelineno-1-103"></a>
+<a id="__codelineno-1-104" name="__codelineno-1-104" href="#__codelineno-1-104"></a><span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span>
+<a id="__codelineno-1-105" name="__codelineno-1-105" href="#__codelineno-1-105"></a>    <span class="n">ok</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-1-106" name="__codelineno-1-106" href="#__codelineno-1-106"></a>    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">QUERIES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-1-107" name="__codelineno-1-107" href="#__codelineno-1-107"></a>        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="s2">"filter"</span><span class="p">])</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="s2">"limit"</span><span class="p">])</span>
+<a id="__codelineno-1-108" name="__codelineno-1-108" href="#__codelineno-1-108"></a>        <span class="k">if</span> <span class="s2">"sort"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+<a id="__codelineno-1-109" name="__codelineno-1-109" href="#__codelineno-1-109"></a>            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="s2">"sort"</span><span class="p">])</span>
+<a id="__codelineno-1-110" name="__codelineno-1-110" href="#__codelineno-1-110"></a>        <span class="n">ex</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
+<a id="__codelineno-1-111" name="__codelineno-1-111" href="#__codelineno-1-111"></a>        <span class="n">es</span> <span class="o">=</span> <span class="n">ex</span><span class="p">[</span><span class="s2">"executionStats"</span><span class="p">]</span>
+<a id="__codelineno-1-112" name="__codelineno-1-112" href="#__codelineno-1-112"></a>        <span class="n">st</span> <span class="o">=</span> <span class="n">stages</span><span class="p">(</span><span class="n">ex</span><span class="p">[</span><span class="s2">"queryPlanner"</span><span class="p">][</span><span class="s2">"winningPlan"</span><span class="p">])</span>
+<a id="__codelineno-1-113" name="__codelineno-1-113" href="#__codelineno-1-113"></a>        <span class="n">idx</span> <span class="o">=</span> <span class="n">ex</span><span class="p">[</span><span class="s2">"queryPlanner"</span><span class="p">][</span><span class="s2">"winningPlan"</span><span class="p">]</span>
+<a id="__codelineno-1-114" name="__codelineno-1-114" href="#__codelineno-1-114"></a>        <span class="k">while</span> <span class="n">idx</span> <span class="ow">and</span> <span class="s2">"indexName"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+<a id="__codelineno-1-115" name="__codelineno-1-115" href="#__codelineno-1-115"></a>            <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inputStage"</span><span class="p">)</span>
+<a id="__codelineno-1-116" name="__codelineno-1-116" href="#__codelineno-1-116"></a>        <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="s2">"indexName"</span><span class="p">]</span> <span class="k">if</span> <span class="n">idx</span> <span class="k">else</span> <span class="s2">"-"</span>
+<a id="__codelineno-1-117" name="__codelineno-1-117" href="#__codelineno-1-117"></a>        <span class="n">n</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">docs</span> <span class="o">=</span> <span class="n">es</span><span class="p">[</span><span class="s2">"nReturned"</span><span class="p">],</span> <span class="n">es</span><span class="p">[</span><span class="s2">"totalKeysExamined"</span><span class="p">],</span> <span class="n">es</span><span class="p">[</span><span class="s2">"totalDocsExamined"</span><span class="p">]</span>
+<a id="__codelineno-1-118" name="__codelineno-1-118" href="#__codelineno-1-118"></a>        <span class="n">problems</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-119" name="__codelineno-1-119" href="#__codelineno-1-119"></a>        <span class="k">if</span> <span class="s2">"COLLSCAN"</span> <span class="ow">in</span> <span class="n">st</span><span class="p">:</span>
+<a id="__codelineno-1-120" name="__codelineno-1-120" href="#__codelineno-1-120"></a>            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"collection scan"</span><span class="p">)</span>
+<a id="__codelineno-1-121" name="__codelineno-1-121" href="#__codelineno-1-121"></a>        <span class="k">if</span> <span class="s2">"SORT"</span> <span class="ow">in</span> <span class="n">st</span><span class="p">:</span>
+<a id="__codelineno-1-122" name="__codelineno-1-122" href="#__codelineno-1-122"></a>            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"blocking sort"</span><span class="p">)</span>
+<a id="__codelineno-1-123" name="__codelineno-1-123" href="#__codelineno-1-123"></a>        <span class="k">if</span> <span class="n">docs</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-1-124" name="__codelineno-1-124" href="#__codelineno-1-124"></a>            <span class="n">problems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"docs examined </span><span class="si">{</span><span class="n">docs</span><span class="si">}</span><span class="s2"> &gt; 4x returned"</span><span class="p">)</span>
+<a id="__codelineno-1-125" name="__codelineno-1-125" href="#__codelineno-1-125"></a>        <span class="n">ok</span> <span class="o">&amp;=</span> <span class="ow">not</span> <span class="n">problems</span>
+<a id="__codelineno-1-126" name="__codelineno-1-126" href="#__codelineno-1-126"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">21</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">idx</span><span class="si">:</span><span class="s2">22</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'&lt;-'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">st</span><span class="p">)</span><span class="si">:</span><span class="s2">28</span><span class="si">}</span><span class="s2"> n=</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">3</span><span class="si">}</span><span class="s2"> keys=</span><span class="si">{</span><span class="n">keys</span><span class="si">:</span><span class="s2">6</span><span class="si">}</span><span class="s2"> docs=</span><span class="si">{</span><span class="n">docs</span><span class="si">:</span><span class="s2">6</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'OK'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">problems</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'FAIL: '</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">problems</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-1-127" name="__codelineno-1-127" href="#__codelineno-1-127"></a>    <span class="k">return</span> <span class="n">ok</span>
+<a id="__codelineno-1-128" name="__codelineno-1-128" href="#__codelineno-1-128"></a>
+<a id="__codelineno-1-129" name="__codelineno-1-129" href="#__codelineno-1-129"></a>
+<a id="__codelineno-1-130" name="__codelineno-1-130" href="#__codelineno-1-130"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-1-131" name="__codelineno-1-131" href="#__codelineno-1-131"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<a id="__codelineno-1-132" name="__codelineno-1-132" href="#__codelineno-1-132"></a>    <span class="n">setup</span><span class="p">(</span><span class="n">with_indexes</span><span class="o">=</span><span class="s2">"--no-indexes"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<a id="__codelineno-1-133" name="__codelineno-1-133" href="#__codelineno-1-133"></a>    <span class="n">load</span><span class="p">()</span>
+<a id="__codelineno-1-134" name="__codelineno-1-134" href="#__codelineno-1-134"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"products:"</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">estimated_document_count</span><span class="p">())</span>
+<a id="__codelineno-1-135" name="__codelineno-1-135" href="#__codelineno-1-135"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"all queries within budget:"</span><span class="p">,</span> <span class="n">check</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="the-indexes-query-by-query">The indexes, query by query<a class="headerlink" href="#the-indexes-query-by-query" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Q1</strong> <code>{status: 1, category: 1, price: 1}</code> — two equalities then the sort field: pure ESR (lesson 05). The
+  scan starts at "active laptops", walks in price order and stops after 24.</li>
+<li><strong>Q2</strong> <code>{"brand._id": 1, status: 1, "rating.avg": -1}</code> — same shape. The sort direction matches the query's
+  descending sort.</li>
+<li><strong>Q3</strong> <code>{"attrs.k": 1, "attrs.v": 1}</code> — the attribute index, used with <code>$elemMatch</code> so <code>k</code> and <code>v</code> bound the
+  scan together (lesson 03).</li>
+<li><strong>Q4</strong> the unique <code>sku</code> index.</li>
+<li><strong>Q5</strong> a <strong>partial</strong> index on <code>stock</code> covering only active products with stock under 5 (lesson 06). The
+  report runs a few times a day; a full index on <code>stock</code> would be maintained on every one of the thousands of
+  stock changes per hour for no benefit. Its query includes <code>status: "active"</code> and <code>stock: {$lt: 5}</code>, so the
+  planner can prove the partial index holds every possible result.</li>
+</ul>
+<h2 id="before-no-secondary-indexes">Before: no secondary indexes<a class="headerlink" href="#before-no-secondary-indexes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ python catalog.py --no-indexes
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>products: 100000
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Q1 category page      -                      SORT&lt;-COLLSCAN               n= 24 keys=     0 docs=100000 FAIL: collection scan, blocking sort, docs examined 100000 &gt; 4x returned
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Q2 brand page         -                      SORT&lt;-COLLSCAN               n= 24 keys=     0 docs=100000 FAIL: collection scan, blocking sort, docs examined 100000 &gt; 4x returned
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Q3 laptops 32GB+ RAM  -                      LIMIT&lt;-COLLSCAN              n= 24 keys=     0 docs=   165 FAIL: collection scan, docs examined 165 &gt; 4x returned
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Q4 product page       sku_unique             EXPRESS_IXSCAN               n=  1 keys=     1 docs=     1 OK
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Q5 low stock          -                      SORT&lt;-COLLSCAN               n= 50 keys=     0 docs=100000 FAIL: collection scan, blocking sort, docs examined 100000 &gt; 4x returned
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>all queries within budget: False
+</code></pre></div>
+<p>Three of the queries read the entire collection and sorted it in memory to return 24 or 50 documents. Q3 got
+lucky: laptops with 32 GB or more are common, so the scan found 24 within 165 documents and stopped — on a
+rarer spec it would have scanned much further. That is exactly the kind of query that looks fine in testing
+and degrades in production, which is why the budget check fails it anyway.</p>
+<h2 id="after-the-designed-indexes">After: the designed indexes<a class="headerlink" href="#after-the-designed-indexes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ python catalog.py
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>products: 100000
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Q1 category page      status_category_price  LIMIT&lt;-FETCH&lt;-IXSCAN         n= 24 keys=    24 docs=    24 OK
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Q2 brand page         brand_status_rating    LIMIT&lt;-FETCH&lt;-IXSCAN         n= 24 keys=    24 docs=    24 OK
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Q3 laptops 32GB+ RAM  attrs_kv               LIMIT&lt;-FETCH&lt;-IXSCAN         n= 24 keys=    24 docs=    24 OK
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Q4 product page       sku_unique             EXPRESS_IXSCAN               n=  1 keys=     1 docs=     1 OK
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Q5 low stock          low_stock              LIMIT&lt;-FETCH&lt;-IXSCAN         n= 50 keys=    50 docs=    50 OK
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>all queries within budget: True
+</code></pre></div>
+<p>Every query examines exactly as many keys and documents as it returns, with no blocking sort. That's the best
+possible result short of covered queries.</p>
+<p>What it costs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{'_id_': 1.69, 'sku_unique': 3.58, 'status_category_price': 2.2, 'brand_status_rating': 1.84, 'attrs_kv': 4.58, 'low_stock': 0.07} MB; data 48.4 MB
+</code></pre></div>
+<p>Under 14 MB of indexes for 48 MB of data. The partial <code>low_stock</code> index is 70 KB — a full index on <code>stock</code> would
+have been about the size of the others. <code>attrs_kv</code> is the largest because it is multikey: two or three entries
+per product.</p>
+<h2 id="the-validator-at-work">The validator at work<a class="headerlink" href="#the-validator-at-work" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">db</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">insert_one</span><span class="p">({</span><span class="s2">"sku"</span><span class="p">:</span> <span class="s2">"SKU-1"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Bad"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"toaster"</span><span class="p">,</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                        <span class="s2">"brand"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"_id"</span><span class="p">:</span> <span class="s2">"acme"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Acme"</span><span class="p">},</span> <span class="s2">"price"</span><span class="p">:</span> <span class="mf">9.99</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                        <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"active"</span><span class="p">,</span> <span class="s2">"attrs"</span><span class="p">:</span> <span class="p">[]})</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sku -&gt; regular expression did not match
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>category -&gt; value was not found in enum
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>price -&gt; type did not match
+</code></pre></div>
+<p>Three mistakes, three precise messages: a malformed SKU, an unknown category, and a price sent as a double
+instead of Decimal128 — the bug that would otherwise have silently produced <code>0.30000000000000004</code>-style totals
+months later.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The budget check works because <code>explain("executionStats")</code> reports <strong>what the server did</strong>, not what it might
+do: the winning plan's stages and the exact number of index keys and documents it touched. Checking those
+numbers against simple rules — no <code>COLLSCAN</code>, no <code>SORT</code>, documents examined close to documents returned —
+captures the properties that decide how a query scales. A query that examines 24 documents to return 24 will
+still examine about 24 when the collection has 100 million products; one that examines 100,000 will examine
+100 million.</p>
+<p>That makes the check suitable for continuous integration: run it against a seeded dataset whenever the schema,
+indexes or query code change. It catches the three regressions that most often reach production — a query
+that gains a filter on an unindexed field, an index dropped as "unused", and a sort added without updating the
+index. The thresholds should be per query (a report can tolerate more than a product page), and the dataset
+must resemble production's distributions, or the planner may legitimately choose differently.</p>
+<h2 id="common-mistakes">Common mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Designing indexes without listing the queries first.</strong></li>
+<li><strong>Testing query performance on tiny collections</strong>, where every plan is fast.</li>
+<li><strong>One index per field</strong> instead of one compound index per query shape.</li>
+<li><strong>Full indexes for rare, narrow reports</strong> where a partial index would do.</li>
+<li><strong>No automated check</strong>, so the next feature quietly reintroduces a collection scan.</li>
+</ul>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Extend the catalogue:</p>
+<ol>
+<li>Add Q6 "search by name prefix within a category" (e.g. names starting with "Acme lap"). Design the index,
+   add the query to <code>QUERIES</code>, and make the budget check pass.</li>
+<li>Add a <code>brands</code> collection and a brand page that shows the brand document plus Q2's products. Implement a
+   brand rename that updates the extended references in products with one <code>update_many</code>.</li>
+<li>Add a <code>reviews</code> collection and an <code>add_review(sku, stars, text)</code> function that inserts the review and
+   updates <code>rating</code> and <code>recentReviews</code> on the product (computed + subset patterns). What can go wrong between
+   the two writes? Keep your answer for Level 3 · 06.</li>
+<li>Make the budget check run each query against <strong>every</strong> category or brand value and report the worst case,
+   not just one value.</li>
+<li>Add <code>"additionalProperties": false</code> to the schema. What else must change for inserts to keep working?</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../09-time-series-capped/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 09 · Time Series &amp; Capped Collections">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                09 · Time Series & Capped Collections
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../level-3/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/progress-tracker.js"></script>
+      
+    
+  </body>
+</html>
