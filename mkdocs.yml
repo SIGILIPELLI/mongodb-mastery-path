@@ -1,6 +1,6 @@
 site_name: MongoDB Mastery Path
 site_description: A hands-on MongoDB course — BSON documents, CRUD, drivers, document modeling and schema patterns, indexes and explain plans, the aggregation pipeline, transactions, change streams, replica sets, sharding, security, backups and performance tuning.
-site_url: https://sigilipelli.github.io/mongodb-mastery-path/
+site_url: https://learnmasterypath.com/mongodb-mastery-path/
 repo_url: https://github.com/sigilipelli/mongodb-mastery-path
 repo_name: mongodb-mastery-path
 

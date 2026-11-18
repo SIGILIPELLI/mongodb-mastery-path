@@ -56,7 +56,7 @@ upgrade lesson performs the rolling procedure and FCV changes for real but not a
 You've finished the course. The best next step is to take the capstone's acceptance-script idea back to a real
 system: write down what your MongoDB deployment is supposed to guarantee — durability, failover, access, recovery
 time — and write a test for each one. Related courses in the series:
-[System Design](https://sigilipelli.github.io/system-design-mastery-path/) for where MongoDB fits in larger
-architectures, [Kubernetes](https://sigilipelli.github.io/kubernetes-mastery-path/) and
-[Docker](https://sigilipelli.github.io/docker-mastery-path/) for running it in containers, and
-[PostgreSQL](https://sigilipelli.github.io/postgresql-mastery-path/) for the relational side of the same problems.
+[System Design](https://learnmasterypath.com/system-design-mastery-path/) for where MongoDB fits in larger
+architectures, [Kubernetes](https://learnmasterypath.com/kubernetes-mastery-path/) and
+[Docker](https://learnmasterypath.com/docker-mastery-path/) for running it in containers, and
+[PostgreSQL](https://learnmasterypath.com/postgresql-mastery-path/) for the relational side of the same problems.

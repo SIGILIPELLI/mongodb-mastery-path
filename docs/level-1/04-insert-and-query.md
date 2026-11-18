@@ -5,7 +5,7 @@ description: "Insert documents and query them with find(): comparison and logica
 # 04 · Inserting & Querying Documents
 
 This lesson covers the everyday half of MongoDB: putting documents in and getting the right ones
-back out. If you know SQL (the [SQL Mastery Path](https://sigilipelli.github.io/sql-mastery-path/)
+back out. If you know SQL (the [SQL Mastery Path](https://learnmasterypath.com/sql-mastery-path/)
 covers it), most of the ideas map directly — `find()` is `SELECT`, the filter is `WHERE`, the
 projection is the column list — but the syntax is a document, and a few behaviours differ in ways
 that matter.

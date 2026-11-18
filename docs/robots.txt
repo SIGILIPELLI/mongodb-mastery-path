@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sigilipelli.github.io/mongodb-mastery-path/sitemap.xml
+Sitemap: https://learnmasterypath.com/mongodb-mastery-path/sitemap.xml

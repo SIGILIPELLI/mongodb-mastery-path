@@ -34,7 +34,7 @@ There are three common ways to get a server onto a development machine:
    distributions and a Homebrew tap for macOS. (The server is not in Homebrew's core repository
    because of its license; the shell `mongosh` is, so `brew install mongosh` works directly.)
 2. **A container** — `docker run -d -p 27017:27017 mongo:<version>` with the official image. See the
-   [Docker Mastery Path](https://sigilipelli.github.io/docker-mastery-path/) if containers are new.
+   [Docker Mastery Path](https://learnmasterypath.com/docker-mastery-path/) if containers are new.
 3. **The official tarball** from `fastdl.mongodb.org` — nothing to install, just unpack and run.
 
 This course uses option 3 because it leaves nothing behind. The download page publishes a SHA-256

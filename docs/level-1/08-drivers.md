@@ -8,8 +8,8 @@ The shell is for people. Applications talk to MongoDB through a **driver** — a
 their language. Drivers all follow the same specifications, so once you understand one, the others
 differ mainly in syntax. This lesson uses the two most common: **PyMongo** for Python and the
 **`mongodb`** package for Node.js. (The language basics are covered in the
-[Python](https://sigilipelli.github.io/python-mastery-path/) and
-[Node.js](https://sigilipelli.github.io/nodejs-mastery-path/) Mastery Paths.)
+[Python](https://learnmasterypath.com/python-mastery-path/) and
+[Node.js](https://learnmasterypath.com/nodejs-mastery-path/) Mastery Paths.)
 
 Versions used here: PyMongo 4.18.3 on Python 3.14, and the Node.js driver 7.7.0 on Node 26.
 

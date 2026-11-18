@@ -6,7 +6,7 @@ description: "How MongoDB's planner races candidate plans, how the plan cache re
 
 When more than one index could answer a query, MongoDB has to pick. It doesn't use a detailed cost model
 built on statistics the way PostgreSQL does (see the
-[PostgreSQL Mastery Path](https://sigilipelli.github.io/postgresql-mastery-path/) for contrast). Instead it
+[PostgreSQL Mastery Path](https://learnmasterypath.com/postgresql-mastery-path/) for contrast). Instead it
 runs a short **race** between the candidate plans and caches the winner for queries of the same shape.
 That design is simple and usually good — and it has one well-known failure mode. This lesson shows the race,
 the cache, and the tools for when you need to overrule the planner.
