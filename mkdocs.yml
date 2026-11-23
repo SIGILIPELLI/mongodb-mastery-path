@@ -83,8 +83,8 @@ not_in_nav: |
 
 nav:
   - Home: index.md
-  - "💼 Interview Questions": interview-questions.md
-  - "📋 Cheat Sheet": cheat-sheet.md
+  - Interview Questions: interview-questions.md
+  - Cheat Sheet: cheat-sheet.md
   - "Level 1 · MongoDB Foundations":
       - Overview: level-1/index.md
       - "01 · How MongoDB Is Built: mongod, Storage & a Local Lab": level-1/01-architecture-and-setup.md
@@ -133,5 +133,5 @@ nav:
       - "08 · Performance Tuning: WiredTiger, Memory & Connections": level-4/08-performance-tuning.md
       - "09 · Upgrades, FCV & Online Schema Migrations": level-4/09-upgrades-migrations.md
       - "10 · Capstone — A Secured Sharded Cluster": level-4/10-capstone-sharded-cluster.md
-  - "🎯 Final Quiz": quiz.md
+  - Final Quiz: quiz.md
 
