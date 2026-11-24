@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://learnmasterypath.com/mongodb-mastery-path/sitemap.xml

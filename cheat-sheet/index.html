@@ -1,0 +1,3736 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A free MongoDB cheat sheet: 19 quick-reference tables from every level of the MongoDB Mastery Path, each linked to its full lesson.">
+      
+      
+      
+        <link rel="canonical" href="https://learnmasterypath.com/mongodb-mastery-path/cheat-sheet/">
+      
+      
+        <link rel="prev" href="../interview-questions/">
+      
+      
+        <link rel="next" href="../level-1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+  
+  <title>MongoDB Cheat Sheet: Quick Reference, Beginner to Advanced</title>
+
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/progress-tracker.css">
+    
+      <link rel="stylesheet" href="../stylesheets/final-quiz.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mastery Path">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="MongoDB Cheat Sheet: Quick Reference, Beginner to Advanced">
+  <meta property="og:description" content="A free MongoDB cheat sheet: 19 quick-reference tables from every level of the MongoDB Mastery Path, each linked to its full lesson.">
+  <meta property="og:url" content="https://learnmasterypath.com/mongodb-mastery-path/cheat-sheet/">
+  <meta property="og:image" content="https://learnmasterypath.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mastery Path: free structured courses, beginner to master">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MongoDB Cheat Sheet: Quick Reference, Beginner to Advanced">
+  <meta name="twitter:description" content="A free MongoDB cheat sheet: 19 quick-reference tables from every level of the MongoDB Mastery Path, each linked to its full lesson.">
+  <meta name="twitter:image" content="https://learnmasterypath.com/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script><script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Mastery Path", "item": "https://learnmasterypath.com/"},
+      {"@type": "ListItem", "position": 2, "name": "MongoDB Mastery Path", "item": "https://learnmasterypath.com/mongodb-mastery-path/"},
+      {"@type": "ListItem", "position": 3, "name": "Cheat Sheet", "item": "https://learnmasterypath.com/mongodb-mastery-path/cheat-sheet/"}
+    ]
+  }
+  </script>
+  <style>
+    .md-banner a:hover { text-decoration: underline !important; }
+    .mp-related { margin-top: 2.4rem; padding-top: 1rem; border-top: 1px solid var(--md-default-fg-color--lightest); font-size: .78rem; }
+    .mp-related h2 { font-size: .9rem; margin: 0 0 .5rem; }
+    .mp-related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+    .mp-related li { margin: 0 !important; }
+  </style>
+  <script type="application/json" id="mp-course-meta">{"home": false, "id": "mongodb-mastery-path", "name": "MongoDB Mastery Path", "repo": "https://github.com/sigilipelli/mongodb-mastery-path", "src": "cheat-sheet.md", "url": "https://learnmasterypath.com/mongodb-mastery-path/"}</script>
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/learn.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/course.css?v=1">
+  <script src="https://learnmasterypath.com/assets/learn.js" defer></script>
+  <script src="https://learnmasterypath.com/assets/signup.js" defer></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mongodb-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  <a href="https://learnmasterypath.com/" style="color: inherit; text-decoration: none;">
+    &larr; Mastery Path &middot; all 100+ free courses
+  </a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/search/" style="color: inherit; text-decoration: none;">Search all courses</a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/resume/" style="color: inherit; font-weight: 700; text-decoration: none;">
+    Got the skills? Free resume ATS check &rarr;
+  </a>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MongoDB Mastery Path" class="md-header__button md-logo" aria-label="MongoDB Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MongoDB Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MongoDB Cheat Sheet: Quick Reference, Beginner to Advanced
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sigilipelli/mongodb-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mongodb-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../interview-questions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interview Questions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cheat Sheet
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · MongoDB Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Data Modeling & Indexes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Aggregation & Application Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Operations & Production
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quiz/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Final Quiz
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MongoDB Mastery Path" class="md-nav__button md-logo" aria-label="MongoDB Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    MongoDB Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sigilipelli/mongodb-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mongodb-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interview-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-mongodb-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · MongoDB Foundations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · MongoDB Foundations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-how-mongodb-is-built-mongod-storage-a-local-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · How MongoDB Is Built: mongod, Storage &amp; a Local Lab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-documents-bson-data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Documents, BSON &amp; Data Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-inserting-querying-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Inserting &amp; Querying Documents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-update-operators-upserts-array-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Update Operators, Upserts &amp; Array Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-mongoimport-mongoexport-mongodump-mongorestore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · mongoimport, mongoexport, mongodump &amp; mongorestore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-project-recipe-box-data-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Project — Recipe Box Data Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-data-modeling-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Data Modeling &amp; Indexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Data Modeling &amp; Indexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-thinking-in-documents-embed-or-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Thinking in Documents: Embed or Reference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-modeling-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Modeling Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-reading-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Reading explain()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-project-model-index-a-store-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Project — Model &amp; Index a Store Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-aggregation-application-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Aggregation &amp; Application Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Aggregation &amp; Application Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-aggregation-pipeline-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Aggregation Pipeline Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-change-streams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Change Streams
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-operations-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Operations &amp; Production
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Operations &amp; Production">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02-write-concern-read-concern-read-preference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Write Concern, Read Concern &amp; Read Preference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-sharding-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Sharding Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-choosing-changing-a-shard-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Choosing &amp; Changing a Shard Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-authentication-roles-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Authentication, Roles &amp; TLS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-backup-restore-point-in-time-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Backup, Restore &amp; Point-in-Time Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-monitoring-the-profiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Monitoring &amp; the Profiler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-a-secured-sharded-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — A Secured Sharded Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · MongoDB Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · MongoDB Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/01-architecture-and-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · How MongoDB Is Built: mongod, Storage & a Local Lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/02-mongosh-like-a-pro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · mongosh Like a Pro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/03-documents-bson-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Documents, BSON & Data Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/04-insert-and-query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Inserting & Querying Documents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/05-arrays-embedded-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Querying Arrays & Embedded Documents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/06-update-operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Update Operators, Upserts & Array Updates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/07-deletes-replaces-bulk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Deletes, Replaces & Bulk Writes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/08-drivers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Drivers: PyMongo & the Node.js Driver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/09-import-export-dump/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · mongoimport, mongoexport, mongodump & mongorestore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/10-project-recipe-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Recipe Box Data Layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Data Modeling & Indexes
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Data Modeling & Indexes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/01-embed-or-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Thinking in Documents: Embed or Reference?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/02-modeling-relationships/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/03-schema-design-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Schema Design Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/04-schema-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Schema Validation with $jsonSchema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/05-indexes-compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · How Indexes Work & Compound Index Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/06-index-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Multikey, Unique, Partial, TTL, Wildcard & Text Indexes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/07-reading-explain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Reading explain()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/08-query-planner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · The Query Planner, Plan Cache & Hints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/09-time-series-capped/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Time Series & Capped Collections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/10-project-store-catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Model & Index a Store Catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Aggregation & Application Features
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Aggregation & Application Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/01-aggregation-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Aggregation Pipeline Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/02-reshaping-expressions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Reshaping Documents with Expressions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/03-lookup-joins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Joins & Unions: $lookup, $graphLookup, $unionWith
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/04-analytics-windows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Analytics: $facet, $bucket & Window Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/05-pipeline-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Pipeline Performance, $out & $merge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/06-transactions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Multi-Document Transactions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/07-change-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Change Streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/08-geospatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Geospatial Queries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/09-text-search-collation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Text Search & Collation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/10-project-order-analytics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Order Analytics Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Operations & Production
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Operations & Production
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/01-replica-sets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Replica Sets: Elections, the Oplog & Failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/02-read-write-concerns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Write Concern, Read Concern & Read Preference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/03-sharding-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Sharding Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/04-shard-keys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Choosing & Changing a Shard Key
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/05-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Authentication, Roles & TLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/06-backup-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Backup, Restore & Point-in-Time Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/07-monitoring-profiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Monitoring & the Profiler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/08-performance-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Performance Tuning: WiredTiger, Memory & Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/09-upgrades-migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Upgrades, FCV & Online Schema Migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/10-capstone-sharded-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — A Secured Sharded Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-mongodb-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · MongoDB Foundations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · MongoDB Foundations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-how-mongodb-is-built-mongod-storage-a-local-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · How MongoDB Is Built: mongod, Storage &amp; a Local Lab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-documents-bson-data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Documents, BSON &amp; Data Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-inserting-querying-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Inserting &amp; Querying Documents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-update-operators-upserts-array-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Update Operators, Upserts &amp; Array Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-mongoimport-mongoexport-mongodump-mongorestore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · mongoimport, mongoexport, mongodump &amp; mongorestore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-project-recipe-box-data-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Project — Recipe Box Data Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-data-modeling-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Data Modeling &amp; Indexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Data Modeling &amp; Indexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-thinking-in-documents-embed-or-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Thinking in Documents: Embed or Reference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-modeling-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Modeling Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-reading-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Reading explain()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-project-model-index-a-store-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Project — Model &amp; Index a Store Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-aggregation-application-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Aggregation &amp; Application Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Aggregation &amp; Application Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-aggregation-pipeline-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Aggregation Pipeline Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-change-streams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Change Streams
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-operations-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Operations &amp; Production
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Operations &amp; Production">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02-write-concern-read-concern-read-preference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Write Concern, Read Concern &amp; Read Preference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-sharding-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Sharding Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-choosing-changing-a-shard-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Choosing &amp; Changing a Shard Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-authentication-roles-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Authentication, Roles &amp; TLS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-backup-restore-point-in-time-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Backup, Restore &amp; Point-in-Time Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-monitoring-the-profiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Monitoring &amp; the Profiler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-a-secured-sharded-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — A Secured Sharded Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+  
+  
+
+
+<h1 id="mongodb-cheat-sheet">MongoDB Cheat Sheet<a class="headerlink" href="#mongodb-cheat-sheet" title="Permanent link">&para;</a></h1>
+<p>Quick-reference tables from <strong>19 lessons</strong> of the free MongoDB Mastery Path, in course order from beginner to advanced. Each section links to the full lesson with explanations and runnable examples.</p>
+<h2 id="level-1-mongodb-foundations">Level 1 · MongoDB Foundations<a class="headerlink" href="#level-1-mongodb-foundations" title="Permanent link">&para;</a></h2>
+<h3 id="01-how-mongodb-is-built-mongod-storage-a-local-lab"><a href="../level-1/01-architecture-and-setup/">01 · How MongoDB Is Built: mongod, Storage &amp; a Local Lab</a><a class="headerlink" href="#01-how-mongodb-is-built-mongod-storage-a-local-lab" title="Permanent link">&para;</a></h3>
+<p><em>The pieces</em></p>
+<table>
+<thead>
+<tr>
+<th>Program</th>
+<th>What it is</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongod</code></td>
+<td>The database server. Stores data, runs queries, replicates.</td>
+<td>every lesson</td>
+</tr>
+<tr>
+<td><code>mongos</code></td>
+<td>A router that sits in front of a <em>sharded</em> cluster and forwards queries to the right shards.</td>
+<td>Level 4</td>
+</tr>
+<tr>
+<td><code>mongosh</code></td>
+<td>The interactive JavaScript shell. Shipped separately from the server.</td>
+<td>every lesson</td>
+</tr>
+<tr>
+<td>Database tools</td>
+<td><code>mongodump</code>, <code>mongorestore</code>, <code>mongoimport</code>, <code>mongoexport</code>, <code>mongostat</code>, <code>mongotop</code>, <code>bsondump</code>. Also shipped separately, with their own version numbers (100.x).</td>
+<td>Level 1 · 09, Level 4</td>
+</tr>
+<tr>
+<td>Drivers</td>
+<td>Libraries for each language (PyMongo, the Node.js <code>mongodb</code> package, Java, Go, C#…).</td>
+<td>Level 1 · 08 onwards</td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-documents-bson-data-types"><a href="../level-1/03-documents-bson-types/">03 · Documents, BSON &amp; Data Types</a><a class="headerlink" href="#03-documents-bson-data-types" title="Permanent link">&para;</a></h3>
+<p><em>The types you will actually use</em></p>
+<table>
+<thead>
+<tr>
+<th>BSON type</th>
+<th><code>$type</code> alias</th>
+<th>Shell / driver value</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Double</td>
+<td><code>"double"</code></td>
+<td><code>1.5</code></td>
+<td>Measurements, scores — anything where tiny rounding is fine</td>
+</tr>
+<tr>
+<td>32-bit integer</td>
+<td><code>"int"</code></td>
+<td><code>1</code>, <code>NumberInt(7)</code></td>
+<td>Counts, small whole numbers</td>
+</tr>
+<tr>
+<td>64-bit integer</td>
+<td><code>"long"</code></td>
+<td><code>NumberLong("7")</code></td>
+<td>Large IDs, counters that can pass 2 billion</td>
+</tr>
+<tr>
+<td>Decimal128</td>
+<td><code>"decimal"</code></td>
+<td><code>NumberDecimal("0.10")</code></td>
+<td>Money and anything that must be exact in base 10</td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>"string"</code></td>
+<td><code>"hi"</code></td>
+<td>UTF-8 text</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>"bool"</code></td>
+<td><code>true</code></td>
+<td>Flags</td>
+</tr>
+<tr>
+<td>Date</td>
+<td><code>"date"</code></td>
+<td><code>new Date()</code></td>
+<td>Points in time (milliseconds since the Unix epoch, UTC)</td>
+</tr>
+<tr>
+<td>ObjectId</td>
+<td><code>"objectId"</code></td>
+<td><code>ObjectId()</code></td>
+<td>Default <code>_id</code> values</td>
+</tr>
+<tr>
+<td>Embedded document</td>
+<td><code>"object"</code></td>
+<td><code>{ a: 1 }</code></td>
+<td>Grouping related fields</td>
+</tr>
+<tr>
+<td>Array</td>
+<td><code>"array"</code></td>
+<td><code>[1, 2]</code></td>
+<td>Lists — and they get special query and index behaviour (lesson 05)</td>
+</tr>
+<tr>
+<td>Null</td>
+<td><code>"null"</code></td>
+<td><code>null</code></td>
+<td>An explicitly empty value</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td><code>"binData"</code></td>
+<td><code>BinData(...)</code>, <code>UUID()</code></td>
+<td>Hashes, UUIDs, small files</td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-inserting-querying-documents"><a href="../level-1/04-insert-and-query/">04 · Inserting &amp; Querying Documents</a><a class="headerlink" href="#04-inserting-querying-documents" title="Permanent link">&para;</a></h3>
+<p><em>Filters: equality and comparison</em></p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(none)</td>
+<td>equals</td>
+<td><code>{ author: "Weir" }</code></td>
+</tr>
+<tr>
+<td><code>$eq</code>, <code>$ne</code></td>
+<td>equals / not equals</td>
+<td><code>{ inStock: { $ne: true } }</code></td>
+</tr>
+<tr>
+<td><code>$gt</code>, <code>$gte</code>, <code>$lt</code>, <code>$lte</code></td>
+<td>ranges</td>
+<td><code>{ pages: { $lt: 300 } }</code></td>
+</tr>
+<tr>
+<td><code>$in</code>, <code>$nin</code></td>
+<td>in / not in a list</td>
+<td><code>{ author: { $in: ["Weir", "Asimov"] } }</code></td>
+</tr>
+<tr>
+<td><code>$exists</code></td>
+<td>field present or not</td>
+<td><code>{ inStock: { $exists: false } }</code></td>
+</tr>
+<tr>
+<td><code>$type</code></td>
+<td>BSON type</td>
+<td><code>{ rating: { $type: "double" } }</code></td>
+</tr>
+<tr>
+<td><code>$regex</code></td>
+<td>pattern match</td>
+<td><code>{ title: /^the /i }</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-update-operators-upserts-array-updates"><a href="../level-1/06-update-operators/">06 · Update Operators, Upserts &amp; Array Updates</a><a class="headerlink" href="#06-update-operators-upserts-array-updates" title="Permanent link">&para;</a></h3>
+<p><em>Field operators</em></p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$set</code></td>
+<td>set a field (creating it, and any missing parents)</td>
+<td><code>{$set: {"address.city": "Pune"}}</code></td>
+</tr>
+<tr>
+<td><code>$unset</code></td>
+<td>remove a field</td>
+<td><code>{$unset: {views: ""}}</code></td>
+</tr>
+<tr>
+<td><code>$inc</code></td>
+<td>add (negative to subtract)</td>
+<td><code>{$inc: {stock: -1}}</code></td>
+</tr>
+<tr>
+<td><code>$mul</code></td>
+<td>multiply</td>
+<td><code>{$mul: {price: NumberDecimal("1.1")}}</code></td>
+</tr>
+<tr>
+<td><code>$min</code> / <code>$max</code></td>
+<td>set only if the new value is lower / higher</td>
+<td><code>{$min: {low: 7}}</code></td>
+</tr>
+<tr>
+<td><code>$rename</code></td>
+<td>rename a field</td>
+<td><code>{$rename: {status: "state"}}</code></td>
+</tr>
+<tr>
+<td><code>$currentDate</code></td>
+<td>set to the server's current date</td>
+<td><code>{$currentDate: {updatedAt: true}}</code></td>
+</tr>
+<tr>
+<td><code>$setOnInsert</code></td>
+<td>set only when an upsert inserts</td>
+<td>see below</td>
+</tr>
+</tbody>
+</table>
+<h3 id="09-mongoimport-mongoexport-mongodump-mongorestore"><a href="../level-1/09-import-export-dump/">09 · mongoimport, mongoexport, mongodump &amp; mongorestore</a><a class="headerlink" href="#09-mongoimport-mongoexport-mongodump-mongorestore" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Format</th>
+<th>Preserves BSON types?</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongoimport</code> / <code>mongoexport</code></td>
+<td>JSON, CSV, TSV (text)</td>
+<td>Only with Extended JSON; CSV loses them unless you declare types</td>
+<td>Exchanging data with other systems and people</td>
+</tr>
+<tr>
+<td><code>mongodump</code> / <code>mongorestore</code></td>
+<td>BSON (binary) + metadata</td>
+<td>Yes, exactly, plus indexes and collection options</td>
+<td>Copies and logical backups between MongoDB deployments</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-project-recipe-box-data-layer"><a href="../level-1/10-project-recipe-box/">10 · Project — Recipe Box Data Layer</a><a class="headerlink" href="#10-project-recipe-box-data-layer" title="Permanent link">&para;</a></h3>
+<p><em>The code</em></p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Method</th>
+<th>Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unique slugs</td>
+<td><code>__init__</code>, <code>add</code></td>
+<td>unique index + catching <code>DuplicateKeyError</code> (code 11000) — lesson 08</td>
+</tr>
+<tr>
+<td>All ingredients</td>
+<td><code>with_all_ingredients</code></td>
+<td>dot path into an array of documents + <code>$all</code> — lesson 05</td>
+</tr>
+<tr>
+<td>Quick recipes</td>
+<td><code>quick</code></td>
+<td>array "contains" + range + compound sort with tie-breaker — lessons 04, 05</td>
+</tr>
+<tr>
+<td>Ratings</td>
+<td><code>rate</code></td>
+<td><code>find_one_and_update</code> with <code>$inc</code> and <code>ReturnDocument.AFTER</code> — lesson 06</td>
+</tr>
+<tr>
+<td>Tags</td>
+<td><code>add_tag</code></td>
+<td>conditional <code>$push</code> with <code>$each</code> + <code>$sort</code> — lesson 06</td>
+</tr>
+<tr>
+<td>Quantities</td>
+<td><code>set_qty</code></td>
+<td>positional <code>$</code> — lesson 06</td>
+</tr>
+<tr>
+<td>Paging</td>
+<td><code>page</code></td>
+<td>keyset pagination on <code>_id</code> — lesson 04</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>delete</code></td>
+<td><code>deleted_count</code> — lesson 07</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-2-data-modeling-indexes">Level 2 · Data Modeling &amp; Indexes<a class="headerlink" href="#level-2-data-modeling-indexes" title="Permanent link">&para;</a></h2>
+<h3 id="01-thinking-in-documents-embed-or-reference"><a href="../level-2/01-embed-or-reference/">01 · Thinking in Documents: Embed or Reference?</a><a class="headerlink" href="#01-thinking-in-documents-embed-or-reference" title="Permanent link">&para;</a></h3>
+<p><em>The question to ask first</em></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Frequency</th>
+<th>Data needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Show a blog post page</td>
+<td>very high</td>
+<td>post + its comments</td>
+</tr>
+<tr>
+<td>Show the homepage list</td>
+<td>very high</td>
+<td>titles of recent posts</td>
+</tr>
+<tr>
+<td>Add a comment</td>
+<td>medium</td>
+<td>one post</td>
+</tr>
+<tr>
+<td>Show a user's comment history</td>
+<td>low</td>
+<td>comments by one user across posts</td>
+</tr>
+<tr>
+<td>Rename a user</td>
+<td>rare</td>
+<td>every place the name appears</td>
+</tr>
+</tbody>
+</table>
+<h3 id="02-modeling-relationships"><a href="../level-2/02-modeling-relationships/">02 · Modeling Relationships</a><a class="headerlink" href="#02-modeling-relationships" title="Permanent link">&para;</a></h3>
+<p><em>Trees</em></p>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Stores</th>
+<th>Cheap</th>
+<th>Expensive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parent reference</td>
+<td><code>parent</code></td>
+<td>children of a node; moving a node</td>
+<td>all descendants; the full path</td>
+</tr>
+<tr>
+<td>Child references</td>
+<td><code>children: [...]</code></td>
+<td>children of a node</td>
+<td>parents; unbounded for wide trees</td>
+</tr>
+<tr>
+<td>Array of ancestors</td>
+<td><code>parent</code>, <code>ancestors: [...]</code></td>
+<td>all descendants, breadcrumbs</td>
+<td>moving a subtree</td>
+</tr>
+<tr>
+<td>Materialized path</td>
+<td><code>path: ",a,b,c,"</code></td>
+<td>descendants via prefix, sorting by path</td>
+<td>moving a subtree</td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-reading-explain"><a href="../level-2/07-reading-explain/">07 · Reading explain()</a><a class="headerlink" href="#07-reading-explain" title="Permanent link">&para;</a></h3>
+<p><em>The three numbers that matter</em></p>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Meaning</th>
+<th>Ideal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nReturned</code></td>
+<td>documents returned</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>totalKeysExamined</code></td>
+<td>index entries read</td>
+<td>≈ <code>nReturned</code></td>
+</tr>
+<tr>
+<td><code>totalDocsExamined</code></td>
+<td>documents loaded from the collection</td>
+<td>≈ <code>nReturned</code>, or 0 if covered</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-project-model-index-a-store-catalog"><a href="../level-2/10-project-store-catalog/">10 · Project — Model &amp; Index a Store Catalog</a><a class="headerlink" href="#10-project-model-index-a-store-catalog" title="Permanent link">&para;</a></h3>
+<p><em>The access patterns</em></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Operation</th>
+<th>Frequency</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Category page: active products in a category, cheapest first, 24 per page</td>
+<td>very high</td>
+<td>equality, equality, sort</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Brand page: a brand's active products, best rated first</td>
+<td>high</td>
+<td>equality, equality, sort</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Spec filter: e.g. laptops with at least 32 GB RAM</td>
+<td>high</td>
+<td>equality + attribute range</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Product page by SKU</td>
+<td>very high</td>
+<td>unique equality</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>Low-stock report: active products with fewer than 5 in stock</td>
+<td>a few times a day</td>
+<td>equality + range + sort on the range</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-3-aggregation-application-features">Level 3 · Aggregation &amp; Application Features<a class="headerlink" href="#level-3-aggregation-application-features" title="Permanent link">&para;</a></h2>
+<h3 id="01-aggregation-pipeline-fundamentals"><a href="../level-3/01-aggregation-fundamentals/">01 · Aggregation Pipeline Fundamentals</a><a class="headerlink" href="#01-aggregation-pipeline-fundamentals" title="Permanent link">&para;</a></h3>
+<p><em>$group: one output document per group</em></p>
+<table>
+<thead>
+<tr>
+<th>Accumulator</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$sum</code>, <code>$avg</code>, <code>$min</code>, <code>$max</code></td>
+<td>arithmetic over the group</td>
+</tr>
+<tr>
+<td><code>$count</code></td>
+<td>number of documents (<code>{ $count: {} }</code>)</td>
+</tr>
+<tr>
+<td><code>$first</code>, <code>$last</code></td>
+<td>first/last value in the order documents arrive — sort first!</td>
+</tr>
+<tr>
+<td><code>$push</code>, <code>$addToSet</code></td>
+<td>array of all values / distinct values</td>
+</tr>
+<tr>
+<td><code>$top</code>, <code>$bottom</code>, <code>$topN</code>, <code>$bottomN</code></td>
+<td>best N by an explicit <code>sortBy</code>, no prior <code>$sort</code> needed</td>
+</tr>
+<tr>
+<td><code>$stdDevPop</code>, <code>$median</code>, <code>$percentile</code></td>
+<td>statistics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-change-streams"><a href="../level-3/07-change-streams/">07 · Change Streams</a><a class="headerlink" href="#07-change-streams" title="Permanent link">&para;</a></h3>
+<p><em>Watching a collection</em></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_id</code></td>
+<td>the <strong>resume token</strong> — a position in the stream</td>
+</tr>
+<tr>
+<td><code>operationType</code></td>
+<td><code>insert</code>, <code>update</code>, <code>replace</code>, <code>delete</code>, plus <code>drop</code>, <code>rename</code>, <code>invalidate</code> and others</td>
+</tr>
+<tr>
+<td><code>ns</code></td>
+<td>database and collection</td>
+</tr>
+<tr>
+<td><code>documentKey</code></td>
+<td>the changed document's <code>_id</code> (and shard key on sharded clusters)</td>
+</tr>
+<tr>
+<td><code>fullDocument</code></td>
+<td>the new document for inserts/replaces; for updates only if requested</td>
+</tr>
+<tr>
+<td><code>updateDescription</code></td>
+<td>for updates: <code>updatedFields</code>, <code>removedFields</code>, <code>truncatedArrays</code></td>
+</tr>
+<tr>
+<td><code>clusterTime</code></td>
+<td>when the change happened</td>
+</tr>
+</tbody>
+</table>
+<h2 id="level-4-operations-production">Level 4 · Operations &amp; Production<a class="headerlink" href="#level-4-operations-production" title="Permanent link">&para;</a></h2>
+<h3 id="02-write-concern-read-concern-read-preference"><a href="../level-4/02-read-write-concerns/">02 · Write Concern, Read Concern &amp; Read Preference</a><a class="headerlink" href="#02-write-concern-read-concern-read-preference" title="Permanent link">&para;</a></h3>
+<p><em>A sensible default set</em></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Write concern</th>
+<th>Read concern</th>
+<th>Read preference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Most application data</td>
+<td><code>majority</code> (default)</td>
+<td><code>local</code> (default)</td>
+<td><code>primary</code> (default)</td>
+</tr>
+<tr>
+<td>Must-not-lose and must-not-un-happen (payments, orders)</td>
+<td><code>majority</code></td>
+<td><code>majority</code></td>
+<td><code>primary</code></td>
+</tr>
+<tr>
+<td>Read-your-writes from secondaries</td>
+<td><code>majority</code></td>
+<td><code>majority</code></td>
+<td><code>secondary*</code> + causal session</td>
+</tr>
+<tr>
+<td>Analytics / reports that tolerate minutes of lag</td>
+<td>n/a</td>
+<td><code>local</code></td>
+<td><code>secondary</code> with tags</td>
+</tr>
+<tr>
+<td>Logs or metrics you can afford to lose</td>
+<td><code>w: 1</code></td>
+<td><code>local</code></td>
+<td><code>primary</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="03-sharding-architecture"><a href="../level-4/03-sharding-architecture/">03 · Sharding Architecture</a><a class="headerlink" href="#03-sharding-architecture" title="Permanent link">&para;</a></h3>
+<p><em>The parts</em></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What it does</th>
+<th>In this lab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shards</strong></td>
+<td>Each shard is a replica set holding a subset of the data.</td>
+<td><code>shA</code>, <code>shB</code>, <code>shC</code> (single-node replica sets)</td>
+</tr>
+<tr>
+<td><strong>Config servers</strong></td>
+<td>A replica set storing the cluster's metadata: which shards exist, which collections are sharded, which ranges live where.</td>
+<td><code>cfg</code> (one node)</td>
+</tr>
+<tr>
+<td><strong><code>mongos</code></strong></td>
+<td>Stateless router. Applications connect to it; it caches the routing table and forwards each operation to the right shard(s).</td>
+<td>port 27400</td>
+</tr>
+</tbody>
+</table>
+<h3 id="04-choosing-changing-a-shard-key"><a href="../level-4/04-shard-keys/">04 · Choosing &amp; Changing a Shard Key</a><a class="headerlink" href="#04-choosing-changing-a-shard-key" title="Permanent link">&para;</a></h3>
+<p><em>Comparing candidate keys for orders</em></p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Write distribution</th>
+<th>"Orders for customer X"</th>
+<th>"Customer X, last 30 days"</th>
+<th>Divisibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{_id: 1}</code> (ObjectId)</td>
+<td>all inserts to one shard (monotonic)</td>
+<td>broadcast</td>
+<td>broadcast</td>
+<td>fine</td>
+</tr>
+<tr>
+<td><code>{city: 1}</code></td>
+<td>8 hot spots</td>
+<td>broadcast</td>
+<td>broadcast</td>
+<td><strong>8 chunks max</strong></td>
+</tr>
+<tr>
+<td><code>{customerId: "hashed"}</code></td>
+<td>even</td>
+<td>one shard</td>
+<td>one shard</td>
+<td>fine, but no range targeting on customerId</td>
+</tr>
+<tr>
+<td><code>{customerId: 1, placedAt: 1}</code></td>
+<td>spread across customers</td>
+<td>one shard</td>
+<td>one shard</td>
+<td>fine — a big customer splits by date</td>
+</tr>
+</tbody>
+</table>
+<h3 id="05-authentication-roles-tls"><a href="../level-4/05-security/">05 · Authentication, Roles &amp; TLS</a><a class="headerlink" href="#05-authentication-roles-tls" title="Permanent link">&para;</a></h3>
+<p><em>What the built-in roles actually allow</em></p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Scope</th>
+<th>Can</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read</code> / <code>readWrite</code></td>
+<td>one database</td>
+<td>query / query, insert, update, delete, <strong>create and drop collections and indexes</strong></td>
+</tr>
+<tr>
+<td><code>dbAdmin</code></td>
+<td>one database</td>
+<td>indexes, stats, profiler, validation — but not read data</td>
+</tr>
+<tr>
+<td><code>userAdmin</code> / <code>userAdminAnyDatabase</code></td>
+<td>one / all databases</td>
+<td>create users and roles, grant roles (including to itself)</td>
+</tr>
+<tr>
+<td><code>clusterMonitor</code></td>
+<td>cluster</td>
+<td>read-only monitoring commands (<code>serverStatus</code>, <code>replSetGetStatus</code>, …)</td>
+</tr>
+<tr>
+<td><code>backup</code> / <code>restore</code></td>
+<td>cluster</td>
+<td>what <code>mongodump</code> / <code>mongorestore</code> need</td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>everything</td>
+<td>everything</td>
+</tr>
+</tbody>
+</table>
+<h3 id="06-backup-restore-point-in-time-recovery"><a href="../level-4/06-backup-restore/">06 · Backup, Restore &amp; Point-in-Time Recovery</a><a class="headerlink" href="#06-backup-restore-point-in-time-recovery" title="Permanent link">&para;</a></h3>
+<p><em>Choosing a strategy</em></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Good for</th>
+<th>Weak at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongodump --oplog</code></td>
+<td>Small-to-medium replica sets; logical copies portable across versions</td>
+<td>Slow for large data; restore rebuilds every index; not consistent for sharded clusters</td>
+</tr>
+<tr>
+<td>Volume snapshots</td>
+<td>Large data; fast restore</td>
+<td>Tied to storage; must cover the whole dbpath atomically</td>
+</tr>
+<tr>
+<td>Oplog archiving + base backup</td>
+<td>Point-in-time recovery to any second</td>
+<td>Must keep the oplog archive continuous — a gap breaks the chain</td>
+</tr>
+<tr>
+<td>Managed backups (Atlas, Ops Manager)</td>
+<td>Sharded clusters, scheduled PITR</td>
+<td>Not available in a plain Community install; not demonstrated here</td>
+</tr>
+</tbody>
+</table>
+<h3 id="07-monitoring-the-profiler"><a href="../level-4/07-monitoring-profiler/">07 · Monitoring &amp; the Profiler</a><a class="headerlink" href="#07-monitoring-the-profiler" title="Permanent link">&para;</a></h3>
+<p><em>What to put on a dashboard</em></p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Source</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operation rates and latencies by type</td>
+<td><code>opcounters</code>, <code>opLatencies</code></td>
+<td>load and the first sign of trouble</td>
+</tr>
+<tr>
+<td>Slow queries per shape</td>
+<td>slow log / profiler (<code>queryShapeHash</code>)</td>
+<td>which query to fix</td>
+</tr>
+<tr>
+<td>Replication lag per secondary</td>
+<td><code>rs.status()</code> optimes</td>
+<td>stale reads, failover risk, oplog window</td>
+</tr>
+<tr>
+<td>Oplog window (hours)</td>
+<td><code>rs.printReplicationInfo()</code></td>
+<td>how long a member can be down</td>
+</tr>
+<tr>
+<td>Cache used / dirty, pages read</td>
+<td><code>wiredTiger.cache</code></td>
+<td>working set vs memory</td>
+</tr>
+<tr>
+<td>Connections current / created</td>
+<td><code>connections</code></td>
+<td>pool misconfiguration, churn</td>
+</tr>
+<tr>
+<td>Queued operations, tickets</td>
+<td><code>queues.execution</code></td>
+<td>saturation</td>
+</tr>
+<tr>
+<td>Disk space, IOPS, CPU</td>
+<td>OS</td>
+<td>everything else depends on them</td>
+</tr>
+<tr>
+<td>Elections</td>
+<td>log, <code>rs.status().term</code></td>
+<td>instability (Lesson 01's laptop had 104 overnight)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-capstone-a-secured-sharded-cluster"><a href="../level-4/10-capstone-sharded-cluster/">10 · Capstone — A Secured Sharded Cluster</a><a class="headerlink" href="#10-capstone-a-secured-sharded-cluster" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Members</th>
+<th>Ports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config server replica set <code>cfg</code></td>
+<td>3</td>
+<td>27901–27903</td>
+</tr>
+<tr>
+<td>Shard replica set <code>shardA</code></td>
+<td>3</td>
+<td>27911–27913</td>
+</tr>
+<tr>
+<td>Shard replica set <code>shardB</code></td>
+<td>3</td>
+<td>27921–27923</td>
+</tr>
+<tr>
+<td>Router <code>mongos</code></td>
+<td>1</td>
+<td>27900</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Go deeper with the full <a href="../">MongoDB Mastery Path</a> curriculum or test yourself with the <a href="../interview-questions/">interview questions</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+  
+  <nav class="mp-related" aria-label="Related free courses">
+    <h2>Related free courses</h2>
+    <ul>
+      <li><a href="https://learnmasterypath.com/postgresql-mastery-path/">PostgreSQL</a></li><li><a href="https://learnmasterypath.com/redis-mastery-path/">Redis</a></li><li><a href="https://learnmasterypath.com/snowflake-mastery-path/">Snowflake</a></li><li><a href="https://learnmasterypath.com/databricks-mastery-path/">Databricks</a></li><li><a href="https://learnmasterypath.com/python-mastery-path/vector-databases-mastery-path/">Vector Databases</a></li>
+      <li><a href="https://learnmasterypath.com/">All 100+ courses &rarr;</a></li>
+    </ul>
+  </nav>
+  
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../interview-questions/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Interview Questions">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Interview Questions
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../level-1/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+  <div class="mp-foot">
+    <div class="mp-foot-inner">
+      <a class="mp-foot-brand" href="https://learnmasterypath.com/"><svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg><span>Mastery Path</span></a>
+      <nav class="mp-sitelinks" aria-label="Site and legal links">
+        <a href="https://learnmasterypath.com/">All courses</a>
+        <a href="https://learnmasterypath.com/about.html">About</a>
+        <a href="https://learnmasterypath.com/contact.html">Contact</a>
+        <a href="https://learnmasterypath.com/mongodb-mastery-path/privacy/">Privacy Policy</a>
+        <a href="https://learnmasterypath.com/terms.html">Terms</a>
+        <a href="https://learnmasterypath.com/mongodb-mastery-path/license/">License</a>
+        <a href="https://learnmasterypath.com/verify/">Verify a certificate</a>
+      </nav>
+    </div>
+    <p class="mp-license-note">
+      © 2026 Vinod Kumar Sigilipelli · Except where otherwise noted, lesson content is licensed under
+      <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and code examples under the
+      <a href="https://opensource.org/license/mit">MIT License</a>.
+    </p>
+  </div>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.path", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/progress-tracker.js"></script>
+      
+        <script src="../javascripts/final-quiz.js"></script>
+      
+    
+  </body>
+</html>
