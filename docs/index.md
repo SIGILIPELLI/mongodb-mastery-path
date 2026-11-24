@@ -1,6 +1,6 @@
 ---
 title: "Free MongoDB Course: Documents, CRUD, Data Modeling, Indexes, Aggregation, Transactions, Replica Sets, Sharding and Operations"
-description: "Free MongoDB course: 36 lessons and 4 projects run on MongoDB 9.0 — BSON, CRUD, schema design, indexes, aggregation, transactions, replication, sharding, security."
+description: "Free MongoDB course: 36 lessons, 3 projects and 1 capstone run on MongoDB 9.0 — BSON, CRUD, schema design, indexes, aggregation, transactions, replication, sharding, security."
 ---
 
 # MongoDB Mastery Path
@@ -55,7 +55,7 @@ can never be split, and how a former primary decides which of its writes to thro
 | **3 · Aggregation & Application Features** | Pipelines, joins, analytics, transactions, change streams, geo, text | 10 | Build reporting, real-time and transactional features |
 | **4 · Operations & Production** | Replication, concerns, sharding, security, backups, monitoring, tuning | 10 | Run MongoDB in production and recover when things go wrong |
 
-Each level has 9 teaching modules plus a hands-on project (module 10), which makes **36 lessons and 4 projects** in total.
+Each level has 9 teaching modules plus a hands-on project (module 10), which makes **36 lessons, 3 projects and 1 capstone** in total.
 
 ## How to use this site
 
